@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 
 import Home from "./pages/Home";
@@ -28,7 +29,14 @@ function App() {
           <Routes>
 
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
 
 
             <Route path="/" element={<Home />} />
