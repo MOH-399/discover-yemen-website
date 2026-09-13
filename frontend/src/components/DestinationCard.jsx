@@ -14,15 +14,15 @@ function DestinationCard({ id, image, title, description }) {
           {title}
         </h3>
 
-        <p className="text-gray-600">
+        <p className="mb-4 text-gray-600">
           {description}
         </p>
 
         <Link
           to={`/destinations/${id}`}
-          className="mt-4 inline-block font-semibold text-red-700 hover:underline"
+          className="inline-block rounded-lg bg-red-700 px-4 py-2 text-white hover:bg-red-800"
         >
-          Learn More →
+          Learn More
         </Link>
       </div>
     </div>

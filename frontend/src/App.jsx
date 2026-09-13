@@ -8,6 +8,10 @@ import Navbar from "./components/Navbar";
 
 import Footer from "./components/Footer";
 
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
+
 import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
 import Culture from "./pages/Culture";
@@ -22,6 +26,11 @@ function App() {
 
         <div className="flex-1">
           <Routes>
+
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+
             <Route path="/" element={<Home />} />
             <Route path="/destinations" element={<Destinations />} />
             <Route path="/destinations/:id" element={<DestinationDetails />} />

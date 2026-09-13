@@ -1,13 +1,21 @@
 import express from "express";
+
 import {
   getAllDestinations,
   getDestinationById,
+  createDestination,
+  updateDestination,
+  deleteDestination,
 } from "../controllers/destinationController.js";
 
 const router = express.Router();
 
-router.get("/", getAllDestinations);
+router.route("/").get(getAllDestinations).post(createDestination);
 
-router.get("/:id", getDestinationById);
+router
+  .route("/:id")
+  .get(getDestinationById)
+  .put(updateDestination)
+  .delete(deleteDestination);
 
 export default router;
