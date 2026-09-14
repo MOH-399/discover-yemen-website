@@ -1,21 +1,21 @@
 import jwt from "jsonwebtoken";
 
 export const loginAdmin = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  const adminEmail = "admin@discoveryemen.com";
-  const adminPassword = "admin123";
+  const adminUsername = process.env.ADMIN_USERNAME;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (email !== adminEmail || password !== adminPassword) {
+  if (username !== adminUsername || password !== adminPassword) {
     return res.status(401).json({
-      message: "Invalid credentials",
+      message: "Invalid username or password",
     });
   }
 
   const token = jwt.sign(
     {
       role: "admin",
-      email: adminEmail,
+      username: adminUsername,
     },
     process.env.JWT_SECRET,
     {
@@ -26,7 +26,7 @@ export const loginAdmin = async (req, res) => {
   res.json({
     token,
     admin: {
-      email: adminEmail,
+      username: adminUsername,
       role: "admin",
     },
   });

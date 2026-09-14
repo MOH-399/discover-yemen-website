@@ -3,6 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/admin/authRoutes.js";
+import cultureRoutes from "./routes/cultureRoutes.js";
+import foodRoutes from "./routes/foodRoutes.js";
+import siteSettingsRoutes from "./routes/siteSettingsRoutes.js";
 
 import connectDB from "./config/db.js";
 import destinationRoutes from "./routes/destinationRoutes.js";
@@ -30,6 +33,9 @@ app.get("/", (req, res) => {
 });
 
 // API Routes
+app.use("/api/settings", siteSettingsRoutes);
+app.use("/api/food", foodRoutes);
+app.use("/api/culture", cultureRoutes);
 app.use("/api/admin", authRoutes);
 app.use("/api/destinations", destinationRoutes);
 

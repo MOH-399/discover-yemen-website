@@ -1,188 +1,164 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DestinationCard from "../components/DestinationCard";
-import FeatureCard from "../components/FeatureCard";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { FaMountain, FaLandmark, FaLeaf } from "react-icons/fa6";
 
 function Home() {
-  const [featured, setFeatured] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [settings, setSettings] = useState({
+    heroTitle: "Discover Yemen",
+    heroDescription: "Explore the beauty, culture and history of Yemen.",
+  });
+
+  const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
-    const fetchFeatured = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/destinations"
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch destinations");
-        }
-
-        const data = await response.json();
-
-        // Show only the first 3 destinations
-        setFeatured(data.slice(0, 3));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFeatured();
+    fetchSettings();
+    fetchDestinations();
   }, []);
 
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/settings");
+      const data = await res.json();
+      setSettings(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchDestinations = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/destinations");
+      const data = await res.json();
+      setDestinations(data.slice(0, 6));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <>
-      {/* Hero Section */}
-      <section
-        className="relative flex min-h-[90vh] items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1600&q=80')",
-        }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/55"></div>
-
-        {/* Admin Login Button */}
-        <div className="absolute right-6 top-6 z-20">
-          <Link
-            to="/admin/login"
-            className="rounded-full border border-white/70 bg-white/10 px-5 py-2 text-sm font-medium text-white backdrop-blur transition hover:bg-white hover:text-red-700"
-          >
-            Admin Login
-          </Link>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-4xl px-6 text-center text-white">
-          <p className="mb-4 text-lg uppercase tracking-[0.3em] text-red-300">
-            Discover the Hidden Beauty of Arabia
-          </p>
-
-          <h1 className="mb-6 text-5xl font-bold md:text-7xl">
-            Discover Yemen
+    <div className="bg-slate-50">
+      {/* Hero */}
+      <section className="bg-gradient-to-r from-red-700 to-red-900 py-24 text-white">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <h1 className="mb-6 text-5xl font-bold md:text-6xl">
+            {settings.heroTitle}
           </h1>
 
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-200">
-            Experience ancient cities, breathtaking mountains, rich traditions,
-            delicious cuisine, and unforgettable adventures across Yemen.
+          <p className="mx-auto mb-8 max-w-3xl text-lg text-red-100">
+            {settings.heroDescription}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/destinations"
-              className="rounded-full bg-red-700 px-8 py-3 font-semibold transition hover:bg-red-800"
+              className="rounded-xl bg-white px-8 py-3 font-semibold text-red-700 hover:bg-red-100"
             >
               Explore Destinations
             </Link>
 
-            <a
-              href="#why-visit"
-              className="rounded-full border border-white px-8 py-3 font-semibold transition hover:bg-white hover:text-black"
+            <Link
+              to="/admin/login"
+              className="rounded-xl border border-white px-8 py-3 font-semibold text-white hover:bg-white hover:text-red-700"
             >
-              Learn More
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Visit Yemen */}
-      <section id="why-visit" className="bg-white py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-800">
-              Why Visit Yemen?
-            </h2>
-
-            <p className="mx-auto max-w-3xl text-gray-600">
-              Yemen offers a unique combination of ancient history,
-              breathtaking landscapes, and rich traditions found nowhere else.
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            <FeatureCard
-              icon={<FaLandmark />}
-              title="Ancient Heritage"
-              description="Discover UNESCO World Heritage sites and centuries-old architecture."
-            />
-
-            <FeatureCard
-              icon={<FaMountain />}
-              title="Amazing Landscapes"
-              description="Explore mountains, valleys, islands, and unforgettable natural beauty."
-            />
-
-            <FeatureCard
-              icon={<FaLeaf />}
-              title="Unique Nature"
-              description="Experience rare wildlife and the famous Dragon Blood Trees of Socotra."
-            />
+              Admin Login
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Featured Destinations */}
-      <section className="bg-slate-50 py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-gray-800">
-              Featured Destinations
-            </h2>
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="mb-10 text-center">
+          <h2 className="text-4xl font-bold text-red-700">
+            Featured Destinations
+          </h2>
 
-            <p className="mx-auto max-w-2xl text-gray-600">
-              Discover some of Yemen's most iconic places loaded directly from
-              MongoDB.
-            </p>
-          </div>
+          <p className="mt-3 text-gray-600">
+            Discover some of Yemen's most beautiful places.
+          </p>
+        </div>
 
-          {loading ? (
-            <LoadingSpinner />
-          ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {featured.map((place) => (
-                <DestinationCard
-                  key={place._id}
-                  id={place._id}
-                  image={place.image}
-                  title={place.name}
-                  description={place.description}
-                />
-              ))}
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {destinations.map((destination) => (
+            <div
+              key={destination._id}
+              className="overflow-hidden rounded-2xl bg-white shadow-lg transition hover:shadow-xl"
+            >
+              <img
+                src={destination.image}
+                alt={destination.name}
+                className="h-60 w-full object-cover"
+              />
+
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-red-700">
+                  {destination.name}
+                </h3>
+
+                <p className="mt-2 text-sm text-red-600">
+                  {destination.city}
+                </p>
+
+                <p className="mt-4 text-gray-600">
+                  {destination.description?.length > 120
+                    ? destination.description.substring(0, 120) + "..."
+                    : destination.description}
+                </p>
+
+                <Link
+                  to={`/destinations/${destination._id}`}
+                  className="mt-6 inline-block rounded-lg bg-red-700 px-5 py-2 text-white hover:bg-red-800"
+                >
+                  Learn More
+                </Link>
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </section>
 
       {/* Statistics */}
-      <section className="bg-red-700 py-16 text-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 text-center md:grid-cols-4">
+      <section className="bg-white py-16">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 text-center md:grid-cols-3">
           <div>
-            <h3 className="text-4xl font-bold">5000+</h3>
-            <p className="mt-2 text-red-100">Years of History</p>
+            <h3 className="text-4xl font-bold text-red-700">
+              {destinations.length}+
+            </h3>
+            <p className="mt-2 text-gray-600">Tourist Destinations</p>
           </div>
 
           <div>
-            <h3 className="text-4xl font-bold">5</h3>
-            <p className="mt-2 text-red-100">UNESCO Heritage Sites</p>
+            <h3 className="text-4xl font-bold text-red-700">1000+</h3>
+            <p className="mt-2 text-gray-600">Years of History</p>
           </div>
 
           <div>
-            <h3 className="text-4xl font-bold">300+</h3>
-            <p className="mt-2 text-red-100">Unique Plant Species</p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-bold">100+</h3>
-            <p className="mt-2 text-red-100">Cultural Traditions</p>
+            <h3 className="text-4xl font-bold text-red-700">4</h3>
+            <p className="mt-2 text-gray-600">UNESCO World Heritage Sites</p>
           </div>
         </div>
       </section>
-    </>
+
+      {/* CTA */}
+      <section className="bg-red-700 py-16 text-white">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <h2 className="text-4xl font-bold">
+            Experience the Heart of Yemen
+          </h2>
+
+          <p className="mt-4 text-red-100">
+            Explore breathtaking landscapes, authentic traditions, and
+            unforgettable Yemeni hospitality.
+          </p>
+
+          <Link
+            to="/contact"
+            className="mt-8 inline-block rounded-xl bg-white px-8 py-3 font-semibold text-red-700 hover:bg-red-100"
+          >
+            Contact Us
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }
 

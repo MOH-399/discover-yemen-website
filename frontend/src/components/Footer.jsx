@@ -1,61 +1,50 @@
-import { FaFacebook, FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 function Footer() {
+  const [settings, setSettings] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:5000/api/settings");
+      const data = await res.json();
+      setSettings(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* Logo */}
-          <div>
-            <h2 className="mb-4 text-2xl font-bold text-red-400">
-              Discover Yemen
-            </h2>
-
-            <p className="text-gray-300 leading-7">
-              Discover Yemen's history, culture, food, and breathtaking
-              destinations through one beautiful website.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="mb-4 text-xl font-semibold">Quick Links</h3>
-
-            <ul className="space-y-2 text-gray-300">
-              <li>Home</li>
-              <li>Destinations</li>
-              <li>Culture</li>
-              <li>Food</li>
-              <li>Contact</li>
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="mb-4 text-xl font-semibold">Follow Us</h3>
-
-            <div className="flex gap-5 text-2xl text-gray-300">
-              <a href="#" className="hover:text-red-400">
-                <FaFacebook />
-              </a>
-
-              <a href="#" className="hover:text-red-400">
-                <FaInstagram />
-              </a>
-
-              <a href="#" className="hover:text-red-400">
-                <FaXTwitter />
-              </a>
-
-              <a href="#" className="hover:text-red-400">
-                <FaYoutube />
-              </a>
-            </div>
-          </div>
+    <footer className="bg-red-900 py-8 text-white">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-6 md:flex-row md:justify-between">
+        <div>
+          <h3 className="text-xl font-bold">Discover Yemen</h3>
+          <p className="text-red-200">
+            Explore Yemen's beauty and heritage.
+          </p>
         </div>
 
-        <div className="mt-10 border-t border-gray-700 pt-6 text-center text-gray-400">
-          © 2026 Discover Yemen. All Rights Reserved.
+        <div className="flex gap-5 text-2xl">
+          <a href={settings.facebook} target="_blank" rel="noreferrer">
+            <FaFacebook />
+          </a>
+
+          <a href={settings.instagram} target="_blank" rel="noreferrer">
+            <FaInstagram />
+          </a>
+
+          <a href={settings.twitter} target="_blank" rel="noreferrer">
+            <FaXTwitter />
+          </a>
+
+          <a href={settings.youtube} target="_blank" rel="noreferrer">
+            <FaYoutube />
+          </a>
         </div>
       </div>
     </footer>

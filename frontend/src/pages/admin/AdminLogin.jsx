@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function AdminLogin() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email,
+            username,
             password,
           }),
         }
@@ -48,11 +48,11 @@ function AdminLogin() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
-            type="email"
-            placeholder="Email"
+            type="text"
+            placeholder="Username"
             className="w-full rounded-xl border p-3"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
 
