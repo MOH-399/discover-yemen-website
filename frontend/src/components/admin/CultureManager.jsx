@@ -79,7 +79,7 @@ function CultureManager() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this item?")) return;
 
-    await fetch(`http://localhost:5000/api/culture/${id}`, {
+    await fetch(`${API_URL}/api/culture/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
