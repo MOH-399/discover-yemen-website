@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { API_URL } from "../config";
 
 function DestinationDetails() {
   const { id } = useParams();
@@ -12,9 +13,7 @@ function DestinationDetails() {
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/destinations/${id}`
-        );
+        const response = await fetch(`${API_URL}/api/destinations/${id}`)
 
         if (!response.ok) {
           throw new Error("Destination not found");

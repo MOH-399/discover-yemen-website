@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { API_URL } from "../../config";
 
 function DestinationManager() {
   const [destinations, setDestinations] = useState([]);
@@ -16,7 +17,7 @@ function DestinationManager() {
   });
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:5000/api/destinations");
+    const res = await fetch(`${API_URL}/api/destinations`);
     const data = await res.json();
     setDestinations(data);
   };
@@ -47,8 +48,8 @@ function DestinationManager() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://localhost:5000/api/destinations/${editingId}`
-      : "http://localhost:5000/api/destinations";
+      ? `${API_URL}/api/destinations/${editingId}`
+      : "${API_URL}/api/destinations";
 
     const method = editingId ? "PUT" : "POST";
 
@@ -87,7 +88,7 @@ function DestinationManager() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this destination?")) return;
 
-    await fetch(`http://localhost:5000/api/destinations/${id}`, {
+    await fetch(`${API_URL}/api/destinations/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

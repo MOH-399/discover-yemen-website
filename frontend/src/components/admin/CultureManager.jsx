@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { API_URL } from "../../config";
 
 function CultureManager() {
   const [items, setItems] = useState([]);
@@ -14,7 +15,7 @@ function CultureManager() {
   });
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:5000/api/culture");
+    const res = await fetch("`${API_URL}/api/culture`");
     const data = await res.json();
     setItems(data);
   };
@@ -43,8 +44,8 @@ function CultureManager() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://localhost:5000/api/culture/${editingId}`
-      : "http://localhost:5000/api/culture";
+      ? `${API_URL}/api/culture/${editingId}`
+      : "${API_URL}/api/culture";
 
     const method = editingId ? "PUT" : "POST";
 

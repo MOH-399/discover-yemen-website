@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Home() {
   const [settings, setSettings] = useState({
@@ -16,7 +17,7 @@ function Home() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/settings");
+      const res = await fetch(`${API_URL}/api/settings`);
       const data = await res.json();
       setSettings(data);
     } catch (error) {
@@ -26,7 +27,7 @@ function Home() {
 
   const fetchDestinations = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/destinations");
+      const res = await fetch(`${API_URL}/api/destinations`);
       const data = await res.json();
       setDestinations(data.slice(0, 6));
     } catch (error) {

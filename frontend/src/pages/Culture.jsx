@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 function Culture() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/culture");
+      const res = await fetch(`${API_URL}/api/culture`);
       const data = await res.json();
       setItems(data);
     };

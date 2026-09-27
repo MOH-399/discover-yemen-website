@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 function Food() {
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/food");
+      const res = await fetch(`${API_URL}/api/food`);
       const data = await res.json();
       setFoods(data);
     };

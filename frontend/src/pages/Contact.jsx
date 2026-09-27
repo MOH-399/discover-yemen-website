@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { API_URL } from "../config";
 
 function Contact() {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/settings");
+      const res = await fetch(`${API_URL}/api/settings`);
       const data = await res.json();
       setSettings(data);
     };

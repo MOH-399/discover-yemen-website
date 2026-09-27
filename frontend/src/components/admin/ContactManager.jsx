@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { API_URL } from "../../config";
 
 function ContactManager() {
   const [form, setForm] = useState({
@@ -16,7 +17,7 @@ function ContactManager() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/settings");
+      const res = await fetch("`${API_URL}/api/settings`");
       const data = await res.json();
       setForm(data);
     };
@@ -30,7 +31,7 @@ function ContactManager() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:5000/api/settings", {
+    const res = await fetch("`${API_URL}/api/settings`", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

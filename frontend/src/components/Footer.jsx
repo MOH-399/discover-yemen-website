@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 import {
   FaFacebook,
   FaInstagram,
@@ -11,7 +12,7 @@ function Footer() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:5000/api/settings");
+      const res = await fetch(`${API_URL}/api/settings`);
       const data = await res.json();
       setSettings(data);
     };

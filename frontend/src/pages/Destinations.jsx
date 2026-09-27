@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DestinationCard from "../components/DestinationCard";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { API_URL } from "../config";
 
 function Destinations() {
   const [destinations, setDestinations] = useState([]);
@@ -19,8 +20,7 @@ function Destinations() {
         if (category) params.append("category", category);
 
         const response = await fetch(
-          `http://localhost:5000/api/destinations?${params}`
-        );
+          `${API_URL}/api/destinations`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch destinations");

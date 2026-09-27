@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { API_URL } from "../../config";
 
 function FoodManager() {
   const [foods, setFoods] = useState([]);
@@ -16,7 +17,7 @@ function FoodManager() {
   });
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:5000/api/food");
+    const res = await fetch("`${API_URL}/api/food`");
     const data = await res.json();
     setFoods(data);
   };
@@ -43,8 +44,8 @@ function FoodManager() {
     e.preventDefault();
 
     const url = editingId
-      ? `http://localhost:5000/api/food/${editingId}`
-      : "http://localhost:5000/api/food";
+      ? `${API_URL}/api/food/${editingId}`
+      : `${API_URL}/api/food`;
 
     const method = editingId ? "PUT" : "POST";
 
@@ -76,7 +77,7 @@ function FoodManager() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this food?")) return;
 
-    await fetch(`http://localhost:5000/api/food/${id}`, {
+    await fetch(`${API_URL}/api/food/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
